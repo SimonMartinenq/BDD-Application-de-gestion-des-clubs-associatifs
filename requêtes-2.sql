@@ -130,7 +130,7 @@ select * from top_clubs;
 /*--------------------------------------------------------------------------------*/
 -- 2
 CREATE OR REPLACE VIEW top_president AS 
-	SELECT m.Id_Membre, Nom, Prenom, m.Responsabilite, Libelle, Date_debut, Date_fin, DATEDIFF(Date_fin, Date_debut) AS DuréeSignature
+	SELECT m.Id_Membre, Nom, Prenom, m.Responsabilite, Libelle, Date_debut, Date_fin, DATEDIFF(Date_fin, Date_debut) AS DuréeSignatureEnJour
 	FROM Membre m 
 	JOIN Rediger r ON r.Id_Membre = m.Id_Membre
 	JOIN Rapport_activitee rap ON rap.Id_Rapport_activitee = r.Id_Rapport_activitee 
@@ -138,7 +138,7 @@ CREATE OR REPLACE VIEW top_president AS
 	JOIN Etat e ON e.Id_Etat= des.Id_Etat
 	JOIN Etudiant et ON et.Num_etudiant = m.Num_etudiant
 	WHERE m.Responsabilite = 'président' AND Libelle = 'en cours de creation'
-	ORDER BY DuréeSignature;
+	ORDER BY DuréeSignatureEnJour;
     
 Select * from top_president;
 /*--------------------------------------------------------------------------------*/
