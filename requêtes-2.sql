@@ -195,25 +195,25 @@ select * from teachers_pet;
 -- 8 
 
 create or replace view perf as 
-	select c.nom as club_name, m.responsabilite, m.debut_affectation, m.fin_affectation, etudiant.nom, etudiant.prenom, 
-			evenement.nom_even as event_organise, IFNULL(som_sponsor.argent_sp, 0) as argent_sponsors, temps.tmp as Temps_redaction,
+    select c.nom as club_name, m.responsabilite, m.debut_affectation, m.fin_affectation, etudiant.nom, etudiant.prenom, 
+            evenement.nom_even as event_organise, IFNULL(som_sponsor.argent_sp, 0) as argent_sponsors, temps.tmp as Temps_redaction,
             ifnull(recompense, 'AUCUNE') as recompense, ifnull(sanction,'AUCUNE') as sanction
-	from membre m
+    from membre m
     natural join club c 
     inner join etudiant using(num_etudiant)
     inner join organise_event using(id_club)
     inner join evenement using(id_evenement)
-    left join (select *, sum(dons) as argent_sp from donner_subvention
-				natural join comite_organisation 
-				group by id_comite_organisation) som_sponsor using(id_evenement)
-	left join (select id_club, datediff(date_fin, date_debut) as tmp from rapport_activitee 
-				natural join description_etat
-				natural join etat
+    left join (select id_comite_organisation, id_evenement , sum(dons) as argent_sp from donner_subvention
+                natural join comite_organisation 
+                group by id_comite_organisation) som_sponsor using(id_evenement)
+    left join (select id_club, datediff(date_fin, date_debut) as tmp from rapport_activitee 
+                natural join description_etat
+                natural join etat
                 natural join generer_rapport
-				where libelle = 'en attente de signature') temps using(id_club)
-	left join recompense using(id_club)
+                where libelle = 'en attente de signature') temps using(id_club)
+    left join recompense using(id_club)
     left join sanction using(id_club)
     where m.responsabilite = 'Président'; 
-select * from perf; 
+select * from perf;
 
 /*--------------------------------------------------------------------------------*/
