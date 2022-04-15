@@ -25,7 +25,7 @@ try:
         host='localhost',
         database='clubs_efrei',
         port='8889')
-    print("Connecter à la base de donnée")
+    print("\nConnecter à la base de données\n")
 except mysql.connector.Error as e:
     if e.errno == errorcode.ER_ACCESS_DENIED_ERROR:
         print("Mauvaises informations utilisateurs")
@@ -37,19 +37,20 @@ except mysql.connector.Error as e:
 
 rep = True
 while rep == True:
-    print("Entrer le numéro de la vue que vous voulez afficher :\n"
-        "aujourd'hui (1)\n"
-        "faineant(2)\n"
-        "perf(3)\n" 
-        "teachers_pet(4)\n"
-        "top_clubs(5)\n"
-        "top_president(6)\n"
-        "trouble_fête(7)\n"
-        "vaut_mieux_acheter(8)") 
+    print("\nEntrez le numéro de la vue que vous voulez afficher :\n\n"
+        "   1: aujourd'hui\n"
+        "   2: faineant\n"
+        "   3: perf\n" 
+        "   4: teachers_pet\n"
+        "   5: top_clubs\n"
+        "   6: top_president\n"
+        "   7: trouble_fête\n"
+        "   8: vaut_mieux_acheter") 
 
     vue = operations(str(input()))
     try:
         #Donnes
+        
         mycursor = con.cursor()
         mycursor.execute("select * from "+vue)
         tab = mycursor.fetchall()
@@ -71,10 +72,9 @@ while rep == True:
     for i in tab:
         x.add_rows([i])
     print(x)
-    print("Voulez-vous en afficher une autre ? (oui/non)")
+    print("\nTapez n'importe quelle touche pour continuer ou 'stop' pour arrêter")
     repStr = str(input())
-    if repStr == "non": rep = False
-    elif repStr == "oui": rep=True
+    if repStr == "stop": rep = False
     else: continue
 
 con.close()

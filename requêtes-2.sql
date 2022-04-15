@@ -31,6 +31,9 @@ select * from clubs_efrei.signe;
                              LES REQUETES 
 --------------------------------------------------------------------------------*/   
 -- 1 
+-- Afficher la liste de tous les clubs de Efrei en précisant leur type, président et description. 
+-- Les informations relatives au président doivent aussi être affichées, notamment son nom, classe et niveau et numéro étudiant.
+
 select c.nom, c.type, c.description, membre.responsabilite, etudiant.nom, 
 		etudiant.prenom, etudiant.classe, etudiant.niveau, etudiant.num_etudiant from club c
 inner join membre using(id_club)
@@ -39,6 +42,8 @@ where membre.responsabilite = 'Président';
 
 /*--------------------------------------------------------------------------------*/   
 -- 2
+-- Afficher la liste des évènements qui ont eu lieu l’année passée, avec leur comité d’organisation, budget alloué et dépenses.
+
 select evenement.*, com.*, budget.budget, depense.depense  from evenement 
 inner join budget using (id_budget)
 left join comite_organisation com using(id_evenement)
@@ -50,6 +55,8 @@ where date_fin like '%2021%' and date_debut like '%2021%' ;
 
 /*--------------------------------------------------------------------------------*/   
 -- 3
+-- Afficher l’état des rapports d’activité de chaque club.
+
 SELECT Club.Nom, Libelle AS Etat_rapport, Rapport_activitee.annee FROM Etat, Rapport_activitee, description_etat, Generer_rapport, Club 
 WHERE Etat.Id_Etat = description_etat.Id_Etat and 
 	description_etat.Id_Rapport_activitee = Rapport_activitee.Id_Rapport_activitee and 
@@ -57,7 +64,9 @@ WHERE Etat.Id_Etat = description_etat.Id_Etat and
     Generer_rapport.Id_Club = Club.Id_Club;
 /*--------------------------------------------------------------------------------*/   
 -- 4 
--- Pour les rapports en cours de signature, afficher la liste des membres qui n’ont pas encore signé.
+-- Pour les rapports en cours de signature, afficher la liste des membres qui n’ont pas
+-- encore signé.
+
 select annee, libelle, responsabilite, date_fin_signature, nom, prenom from rapport_activitee
 	inner join description_etat using(id_rapport_activitee)
 	inner join etat using(id_etat)
@@ -68,6 +77,11 @@ where libelle = 'en attente de signature' and date_fin_signature is NULL;
 
 /*--------------------------------------------------------------------------------*/   
 -- 5
+
+-- Afficher les étudiants qui participent à plus d’un seul club, en indiquant le nom du
+-- club et leur position au sein de celui-ci (s'ils n'ont pas de responsabilité, la position
+-- doit simplement mentionner membre).
+
 select m.responsabilite, club.nom as nom_club, etudiant.nom, etudiant.prenom from membre m
 inner join etudiant using(num_etudiant)
 inner join club using(id_club)
@@ -77,6 +91,9 @@ where etudiant.num_etudiant in ( select num_etudiant from membre
 								having count(num_etudiant) > 1); 
 /*--------------------------------------------------------------------------------*/                
 -- 6
+
+-- Afficher la liste des dix tâches les plus coûteuses, avec leurs prix, et responsable.
+
 select libelle, montant, responsabilite, etudiant.nom, etudiant.prenom from tache
 inner join membre on tache.id_responsable = membre.id_membre
 inner join etudiant using(num_etudiant)
@@ -84,6 +101,9 @@ order by montant desc
 LIMIT 10; 
 /*--------------------------------------------------------------------------------*/   
 -- 7 
+-- Donner les évènements communs à plusieurs clubs, avec la liste de leurs
+-- responsables, et leurs affectations.
+
 select nom_even as Nom_evenement, responsabilite_tmp as Responsabilite_temporaire, prenom, nom, genre from comite_organisation
 inner join evenement e using(id_evenement)
 inner join membre_temporaire mb using(id_comite_organisation)
@@ -95,6 +115,9 @@ where nom_even in (select distinct nom_even from evenement
 			having count(organise_event.id_club) > 1);
 /*--------------------------------------------------------------------------------*/   
 -- 8
+-- 8. Afficher la liste des récompenses allouées à chaque club, ainsi que leurs
+-- provenances.
+
 SELECT c.Nom as Club, r.recompense, d.Nom as provenance
 FROM Club c, recompense r, Donnateur d
 WHERE c.Id_Club = r.Id_Club
@@ -106,6 +129,7 @@ and r.Id_Donnateur = d.Id_Donnateur;
                              LES VUES 
 --------------------------------------------------------------------------------*/   
 -- 1 
+
 DROP VIEW IF exists top_clubs; 
 CREATE view top_clubs as 
 	select * from club 
