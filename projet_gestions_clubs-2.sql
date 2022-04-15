@@ -280,7 +280,7 @@ insert into etudiant (prenom, nom, genre, classe, niveau, date_naissance) values
     ;
 
 insert into club ( Nom, Date_creation, Type, Description) values 
-    ('Bureau des étudiant','2010-04-12', 'evenementiel', 'Organise la vie de l école'),
+    ('Bureau des étudiants','2010-04-12', 'evenementiel', 'Organise la vie de l école'),
     ('Efight','2020-01-02', 'sportif', 'Sport de combat'),
     ('4esport','2010-03-25', 'sportif', 'Jeux vidéos'),
     ('FAP','2012-05-05', 'humanitaire', 'Humanitaire'),
