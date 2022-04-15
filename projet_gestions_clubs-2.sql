@@ -577,17 +577,17 @@ insert into rapport_activitee (Id_Rapport_activitee, Annee) values
    (3,2020),
    (4,2021),
    (5,2021),
-   (6,2017),
-   (7,2018),
-   (8,2019),
-   (9,2010),
-   (10,2021),
-   (11,2022),
-   (12,2022);   
+   (6,2020),
+   (7,2020),
+   (8,2020),
+   (9,2020),
+   (10,2020),
+   (11,2020),
+   (12,2020);   
    
 insert into etat (id_etat, libelle, Date_debut, Date_fin) values
    (1,'en cours de création','2020-01-11', '2022-02-05'),
-   (2,'en cours de création','2020-01-20', '2021-01-26'),
+   (2,'en cours de création','2020-01-20', '2014-01-26'),
    (3,'en attente de signature','2020-08-23', '2020-09-28'),
    (4,'en attente de signature','2020-06-19', '2020-07-04'),
    (5,'signé','2017-05-11', '2017-05-27'), 
@@ -598,7 +598,15 @@ insert into etat (id_etat, libelle, Date_debut, Date_fin) values
    (10,'soumis','2021-06-01', '2021-07-03'), 
    (11,'en attente de signature','2022-06-09', '2022-07-13'),
    (12,'en attente de signature','2022-05-12', '2022-06-26'),
-   (13,'absent','2020-01-02', '2020-01-11');
+   (13,'absent','2020-01-02', '2020-01-11'),
+   (14,'en attente de signature','2020-03-28', '2020-05-04'),
+   (15,'en attente de signature','2021-02-25', '2021-04-27'),
+   (16,'en attente de signature','2020-05-03', '2020-05-12'),
+   (17,'en attente de signature','2020-03-09', '2020-04-11'),
+   (18,'en attente de signature','2020-03-14', '2020-03-28'),
+   (19,'en attente de signature','2020-03-15', '2020-04-12'),
+   (20,'en attente de signature','2020-03-07', '2020-03-25'),
+   (21,'en attente de signature','2020-04-13', '2020-05-02');
 
 insert into description_etat (Id_Rapport_activitee, id_etat) values
    (1,1),
@@ -613,7 +621,15 @@ insert into description_etat (Id_Rapport_activitee, id_etat) values
    (9,9),
    (10,10), 
    (11,11),
-   (12,12); 
+   (12,12), 
+   (2,14),
+   (4,15),
+   (5,16),
+   (6,17),
+   (7,18),
+   (8,19),
+   (9,20),
+   (10,21); 
 
 insert into generer_rapport (id_club, Id_Rapport_activitee) values
    (1,1), 
