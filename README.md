@@ -1,4 +1,4 @@
-# projetBDD_clubs_efrei
+#  BDD Application de gestion des clubs associatifs
   Projet
 Application de gestion des clubs
 Description du projet
